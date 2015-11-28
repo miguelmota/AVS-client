@@ -4,7 +4,7 @@
 
 <img src="./src/screenshot.png" width="500">
 
-# What
+# How it works
 
 With this application the user holds the spacebar to speak an utterance. The utterance is base64 encoded and sent over to the AVS server via a web socket. The AVS server sends the response back as binary data via the web socket and is decoded into an audio buffer which is played back to the user.
 
