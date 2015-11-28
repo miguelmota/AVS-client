@@ -1,0 +1,108 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+body, * {
+  font-family: 'Avenir Next';
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+
+@keyframes fadeIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+
+.interface {
+  width: 100%;
+  height: 100%;
+  //background-image: url("../images/polygons.png"), linear-gradient(rgba(82, 82, 82, 1), rgba(82, 82, 82, 1));
+  background: linear-gradient(#305D79, #3A507D);
+
+  .interface__dialog {
+    width: 100%;
+    height: 100%;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    animation: fadeInUp 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+    #speech-results {
+      width: 100%;
+      text-align: center;
+      font-size: 65px;
+      color: rgba(255, 255, 255, 1);
+      transition: all 0.3s ease;
+      font-weight: 300;
+
+      &.listening {
+        color: rgba(255, 255, 255, 0.35);
+      }
+    }
+  }
+}
+
+#listenButton {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: fadeIn 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+  animation-delay: 1s;
+  animation-fill-mode: both;
+
+  path {
+    transition: all 0.3s ease;
+    fill: rgba(255, 255, 255, 0.5) !important;
+  }
+
+  &.listening path, &:hover path {
+    fill: rgba(255, 255, 255, 1) !important;
+  }
+}
+
+#alexa {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  transition: all 0.75s ease;
+  transform: scale(0);
+
+  &.listening {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

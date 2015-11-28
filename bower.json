@@ -1,0 +1,21 @@
+{
+  "name": "acorns-alexa",
+  "version": "0.0.0",
+  "authors": [
+    "Timothy Kendall <timkendall18@gmail.com>"
+  ],
+  "moduleType": [
+    "es6"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "sprint": "~0.1.0"
+  }
+}

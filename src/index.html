@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Alexa Voice Service Demo</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
+  </head>
+  <body>
+    <div class="interface">
+      <svg version="1.1" id="listenButton" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+         width="14.402px" height="22.987px" viewBox="0 0 14.402 22.987" style="enable-background:new 0 0 14.402 22.987;"
+         xml:space="preserve">
+      <g>
+        <path style="fill:#414042;" d="M13.438,8.658c-0.532,0-0.964,0.433-0.964,0.966v1.619c-0.001,1.459-0.589,2.771-1.544,3.729
+          c-0.957,0.955-2.27,1.543-3.728,1.544c-1.459-0.001-2.771-0.589-3.728-1.544c-0.956-0.957-1.544-2.27-1.545-3.729V9.624
+          c0-0.533-0.432-0.966-0.964-0.966S0.002,9.091,0.002,9.624L0,11.243c0.002,3.357,2.299,6.176,5.406,6.974
+          c0.066,0.008,0.13,0.023,0.19,0.046c0.357,0.126,0.617,0.456,0.641,0.851c0.001,0.02,0.002,0.038,0.002,0.059
+          c0,0.02-0.001,0.038-0.002,0.058v0.562c0.001,0.019,0.002,0.038,0.002,0.058s-0.001,0.038-0.002,0.058
+          c-0.028,0.474-0.396,0.854-0.864,0.902v0.001c-0.546,0.058-1.084,0.141-1.613,0.248h0.027c-0.41,0.118-0.709,0.496-0.709,0.945
+          c0,0.543,0.439,0.983,0.982,0.983h6.28c0.544,0,0.985-0.44,0.985-0.984c0-0.446-0.297-0.823-0.703-0.944
+          c-0.025-0.008-0.051-0.015-0.076-0.02c-0.006-0.001-0.014-0.003-0.021-0.004c-0.491-0.097-0.99-0.171-1.496-0.225V20.81
+          c-0.463-0.047-0.828-0.42-0.863-0.886c-0.002-0.024-0.002-0.05-0.002-0.074c0-0.025,0-0.05,0.002-0.074v-0.529
+          c-0.002-0.024-0.002-0.05-0.002-0.074c0-0.025,0-0.05,0.002-0.074c0.029-0.387,0.287-0.71,0.639-0.835
+          c0.062-0.022,0.126-0.038,0.193-0.047c3.107-0.798,5.404-3.615,5.404-6.973V9.624C14.402,9.091,13.971,8.658,13.438,8.658z"/>
+        <path style="fill:#414042;" d="M7.202,15.108c2.14,0,3.874-1.734,3.874-3.875V3.875C11.076,1.734,9.342,0,7.202,0
+          S3.328,1.734,3.328,3.875v7.358C3.328,13.374,5.062,15.108,7.202,15.108z"/>
+      </g>
+      </svg>
+
+      <!-- User/Alex dialog -->
+      <div class="interface__dialog">
+        <div id="speech-results">Hold spacebar to speak...</div>
+      </div>
+
+      <!-- Alexa -->
+      <div id="alexa">
+      </div>
+
+      <!-- Possible Responses -->
+      <div class="interface__possible-responses">
+      </div>
+    </div>
+
+    <script src="scripts/recorder.js"></script>
+    <script src="scripts/app.js"></script>
+  </body>
+</html>
