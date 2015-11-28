@@ -6,11 +6,28 @@
 
 # Development
 
+Install node modules
+
 ```bash
 npm install
-bower install
+```
 
+Install bower components
+
+```bash
+bower install
+```
+
+Run local web server
+
+```bash
 gulp
+```
+
+Build and minify
+
+```bash
+gulp build
 ```
 
 # Credits & Contributors
