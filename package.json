@@ -1,6 +1,8 @@
 {
   "name": "AVS-client",
   "version": "0.0.1",
+  "author": "Miguel Mota <hello@miguelmota.com> (http://www.miguelmota.com/)",
+  "license": "MIT",
   "devDependencies": {
     "babelify": "^6.0.2",
     "browser-sync": "^2.7.1",
