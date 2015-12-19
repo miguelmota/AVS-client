@@ -1,3 +1,5 @@
+'use strict';
+
 import $ from 'sprint';
 import SpeechToText from './speech-to-text';
 import AudioVisualizer from './audio-visualizer';
@@ -216,21 +218,127 @@ navigator.getUserMedia({ audio: true }, (stream) => {
     console.error(error);
   });
 
-ws.onmessage = function (event) {
-  console.log('Got data:', event.data, event.data.byteLength);
-  const shouldSpeak = true;
+var audioBufferQueue = [];
+var responseQueue = [];
+var directivesQueue = [];
+var mp3Queue = [];
+var audioPlayer = document.getElementById('audio');
 
-  if (shouldSpeak) {
-    audioContext.decodeAudioData(event.data, function(buffer) {
+ws.onmessage = function (event) {
+  const data = event.data;
+  const isArrayBuffer = Object.prototype.toString.call(data) === '[object ArrayBuffer]';
+  console.log('Got data:', event, data, data.byteLength);
+
+  if (!isArrayBuffer) {
+    let response = {};
+
+    try {
+      response = JSON.parse(data);
+    } catch(error) {
+      console.log(error);
+    }
+
+    let headers = response.headers;
+    let body = response.body;
+
+    if (headers['Content-Type'] === 'application/json') {
+      try {
+        body = JSON.parse(body);
+      } catch(error) {
+        console.log(error);
+      }
+
+      console.log('body', body);
+
+      /*
+       * directive.
+       * { namespace: 'AudioPlayer',
+       *   name: 'clearQueue',
+       *     payload: { clearBehavior: 'CLEAR_ENQUEUED' } }
+       **/
+
+      var directives = _.get(body, ['messageBody', 'directives'], []);
+
+      var playing = false;
+
+      for (var i = 0; i < directives.length; i++) {
+        var directive = directives[i];
+        if (_.get(directive, 'name') === 'speak') {
+          if (!playing) {
+            setTimeout(function() {
+              play(_.get(directive, ['payload', 'audioContent'], '').replace('cid:', ''));
+              directives.splice(i, 1);
+            }, 200);
+          }
+        }
+
+        if (_.get(directive, 'name') === 'play' && _.get(directive, 'namespace') === 'AudioPlayer') {
+          var streams = _.get(directive, ['payload', 'audioItem', 'streams']);
+
+          if (_.size(streams)) {
+            streams.forEach(function(stream) {
+              if (stream.streamMp3Urls) {
+                mp3Queue = stream.streamMp3Urls;
+                audioPlayerPlay();
+              }
+            });
+          }
+        }
+      }
+    } else {
+      responseQueue.push(headers);
+    }
+  }
+
+  if (isArrayBuffer) {
+    audioBufferQueue.push(data);
+  } else {
+
+  }
+};
+
+var source = null;
+
+function play(identifier) {
+  var data = responseQueue.reduce(function(acc, o, i) {
+    var contentId = _.get(o, 'Content-ID', '');
+    if (contentId && contentId.indexOf(identifier) > -1) {
+      responseQueue.splice(i, 1);
+      return audioBufferQueue.splice(i, 1)[0];
+    }
+    return acc;
+  }, null);
+
+  if (data) {
+    audioContext.decodeAudioData(data, function(buffer) {
       console.log('Decoded buffer:', buffer);
 
-      const source = audioContext.createBufferSource();
+      if (source) {
+        source.stop();
+      }
+
+      source = audioContext.createBufferSource();
       source.buffer = buffer;
       source.connect(audioContext.destination);
       source.start(0);
+
+      source.onended = function() {
+        sourceEndHandler(source);
+      };
     }, function(err) {
       stateCounter.reset();
       console.error('error', err);
     });
   }
-};
+}
+
+function audioPlayerPlay() {
+  if (mp3Queue.length) {
+    audioPlayer.src = mp3Queue.shift();
+    audioPlayer.play();
+  }
+}
+
+function sourceEndHandler(source) {
+
+}
